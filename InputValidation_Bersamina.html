@@ -1,0 +1,501 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnHub Registration</title>
+  <style>
+    :root {
+      --primary: #2f80ed;
+      --primary-dark: #1f5fbf;
+      --light-blue: #eaf3ff;
+      --white: #ffffff;
+      --text: #1f2a37;
+      --muted: #5c6b7a;
+      --border: #dfeaf5;
+      --shadow: rgba(22, 60, 120, 0.12);
+      --danger: #c62828;
+      --success: #2e7d32;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f4f9ff 0%, #edf5ff 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 760px;
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: 0 12px 30px var(--shadow);
+      padding: 28px 24px 20px;
+      border: 1px solid var(--border);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      color: var(--primary-dark);
+    }
+
+    .subtitle {
+      margin: 10px auto 0;
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    form {
+      display: block;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 20px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      background: #fbfdff;
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+    }
+
+    .helper {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .status-message {
+      min-height: 22px;
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: var(--success);
+    }
+
+    .error-message {
+      color: var(--danger);
+      font-size: 0.8rem;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 8px;
+      padding: 12px 10px;
+      background: var(--light-blue);
+      border-radius: 10px;
+      border: 1px solid #dfeaf5;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .checkbox-row label {
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 22px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    }
+
+    .submit-btn {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 8px 18px rgba(47, 128, 237, 0.25);
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .reset-btn {
+      background: #eef4ff;
+      color: var(--primary-dark);
+      border: 1px solid #cfe0ff;
+    }
+
+    .reset-btn:hover {
+      background: #e4efff;
+      transform: translateY(-1px);
+    }
+
+    .info-section,
+    .reflection {
+      margin-top: 36px;
+      padding-top: 22px;
+      border-top: 2px solid #edf2f8;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      color: var(--primary-dark);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .info-section p,
+    .info-section li,
+    .reflection li {
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .info-section ul,
+    .reflection ol {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .example-box {
+      margin-top: 14px;
+      background: #f5faff;
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 22px 16px 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card" aria-labelledby="registration-title">
+      <div class="header">
+        <h1 id="registration-title">Join LearnHub</h1>
+        <p class="subtitle">
+          Create an account to start learning online with helpful courses, guided lessons,
+          and a community of students.
+        </p>
+      </div>
+
+      <form id="registerForm" method="post" action="#">
+        <div class="form-grid">
+          <div class="field">
+            <label for="fullName">Full Name</label>
+            <input
+              id="fullName"
+              name="fullName"
+              type="text"
+              required
+              minlength="2"
+              maxlength="60"
+              placeholder="Enter your full name"
+            />
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="student@example.com"
+            />
+          </div>
+
+          <div class="field">
+            <label for="age">Age</label>
+            <input
+              id="age"
+              name="age"
+              type="number"
+              required
+              min="18"
+              max="100"
+              placeholder="18"
+            />
+          </div>
+
+          <div class="field">
+            <label for="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              required
+              minlength="4"
+              maxlength="20"
+              pattern="[A-Za-z][A-Za-z0-9_]*"
+              title="Username must start with a letter and can contain letters, numbers, and underscores."
+              placeholder="Enter a username"
+            />
+            <div class="helper">Must start with a letter and may include letters, numbers, and underscores.</div>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              minlength="8"
+              maxlength="32"
+              pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,32}"
+              title="Password must be 8 to 32 characters long and include at least one uppercase letter, one lowercase letter, and one number."
+              placeholder="Create a password"
+            />
+            <div class="helper">
+              Use 8-32 characters. Include at least one uppercase letter, one lowercase letter, and one number.
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              required
+              minlength="8"
+              maxlength="32"
+              placeholder="Re-enter your password"
+            />
+            <div class="helper">This must match the password exactly.</div>
+            <div id="passwordMatchMessage" class="status-message" aria-live="polite"></div>
+          </div>
+
+          <div class="field full-width">
+            <label for="bio">Short Introduction or Bio</label>
+            <textarea
+              id="bio"
+              name="bio"
+              required
+              minlength="20"
+              maxlength="300"
+              placeholder="Write a short introduction about yourself and your learning goals."
+            ></textarea>
+            <div class="helper">Write between 20 and 300 characters so others can learn a little about you.</div>
+          </div>
+
+          <div class="field full-width">
+            <div class="checkbox-row">
+              <input id="terms" name="terms" type="checkbox" required />
+              <label for="terms">
+                I agree to the Terms and Conditions and understand that this is a demo form for learning.
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="submit" class="submit-btn">Submit</button>
+          <button type="reset" class="reset-btn">Reset</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <section class="info-section card" style="max-width: 760px; margin: 24px auto 40px;">
+    <h2>Understanding Input Validation and Sanitization</h2>
+    <ul>
+      <li>
+        <strong>Input validation</strong> checks whether the submitted data follows the required rules.
+        For example, the email field must look like an email address, and the age must be between 18 and 100.
+      </li>
+      <li>
+        <strong>Input sanitization</strong> or safe input handling helps prevent submitted content from being
+        interpreted in an unsafe way. This helps reduce security problems.
+      </li>
+      <li>
+        HTML attributes such as <code>required</code>, <code>type="email"</code>, <code>min</code>,
+        <code>max</code>, <code>minlength</code>, <code>maxlength</code>, and <code>pattern</code>
+        help enforce input rules before the form is submitted.
+      </li>
+      <li>
+        HTML validation alone is not enough. Client-side validation can be bypassed, so real applications
+        must also validate data on the server and apply proper security controls.
+      </li>
+      <li>
+        User-submitted text should be displayed as safe text, not automatically interpreted as HTML or JavaScript.
+      </li>
+    </ul>
+
+    <div class="example-box">
+const userText = "&lt;script&gt;alert('bad script')&lt;/script&gt;";
+messageElement.textContent = userText;
+    </div>
+
+    <p>
+      The example above uses <code>textContent</code>, which displays the text safely. If a developer used
+      <code>innerHTML</code>, the browser could try to interpret the content as HTML.
+    </p>
+  </section>
+
+  <section class="reflection card" style="max-width: 760px; margin: 0 auto 60px;">
+    <h2>Reflection</h2>
+    <ol>
+      <li>
+        <strong>What is the difference between validation and sanitization?</strong>
+        Validation checks whether input matches the expected format. Sanitization helps make input safe
+        before storing or displaying it.
+      </li>
+      <li>
+        <strong>Which HTML attributes did you use, and why?</strong>
+        We used <code>required</code>, <code>type</code>, <code>min</code>, <code>max</code>,
+        <code>minlength</code>, <code>maxlength</code>, and <code>pattern</code> to make sure the
+        form accepts only valid and useful data.
+      </li>
+      <li>
+        <strong>Why should developers never rely exclusively on client-side validation?</strong>
+        Because users can bypass browser checks. Server-side validation is still required for security and reliability.
+      </li>
+      <li>
+        <strong>How should a website safely display user-submitted text?</strong>
+        It should display the text as plain text using <code>textContent</code> instead of treating it as HTML.
+      </li>
+    </ol>
+  </section>
+
+  <script>
+    const form = document.getElementById("registerForm");
+    const passwordField = document.getElementById("password");
+    const confirmField = document.getElementById("confirmPassword");
+    const matchMessage = document.getElementById("passwordMatchMessage");
+
+    function checkPasswords() {
+      if (confirmField.value.length === 0) {
+        matchMessage.textContent = "";
+        confirmField.setCustomValidity("");
+        return true;
+      }
+
+      if (passwordField.value !== confirmField.value) {
+        matchMessage.textContent = "Passwords do not match. Please re-enter both fields.";
+        confirmField.setCustomValidity("Passwords do not match.");
+        return false;
+      }
+
+      matchMessage.textContent = "Passwords match.";
+      confirmField.setCustomValidity("");
+      return true;
+    }
+
+    passwordField.addEventListener("input", checkPasswords);
+    confirmField.addEventListener("input", checkPasswords);
+
+    form.addEventListener("reset", function () {
+      setTimeout(function () {
+        matchMessage.textContent = "";
+        confirmField.setCustomValidity("");
+      }, 0);
+    });
+
+    form.addEventListener("submit", function (event) {
+      if (!form.checkValidity()) {
+        return;
+      }
+
+      if (!checkPasswords()) {
+        event.preventDefault();
+        confirmField.reportValidity();
+        return;
+      }
+
+      event.preventDefault();
+      alert("This is a demo form only. No real information is saved.");
+    });
+  </script>
+</body>
+</html>
+```
+
